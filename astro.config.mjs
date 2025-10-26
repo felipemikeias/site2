@@ -4,7 +4,7 @@ import sitemap from "@astrojs/sitemap"; // Importar sitemap
 
 // https://astro.build/config
 export default defineConfig({
-  output: 'server',
+  output: 'static',
   adapter: node({
     mode: 'standalone'
   }),
