@@ -1,0 +1,267 @@
+---
+import PostCard from "../components/PostCard.astro";
+import MainLayout from "../layouts/MainLayout.astro";
+import { homePagePostsQuery } from "../lib/api";
+
+const data = await homePagePostsQuery();
+const posts = data.posts.nodes;
+
+Astro.response.headers.set('Cache-Control','max-age=600, must-revalidate');
+
+const pageDescription = "Descubra as últimas notícias, análises e guias sobre computadores, celulares e tecnologia em geral no JustPCs. Seu blog completo para a área tech.";
+---
+
+<MainLayout title='Página Inicial' description={pageDescription} showHero={true}>
+	<section class="recent-posts-section">
+		<h2>Publicações Recentes</h2>
+		<div class="posts-grid">
+			{
+				posts.map(post => {
+					return (
+						<PostCard post={post}></PostCard>
+					)
+				})
+			}
+		</div>
+	</section>
+
+  <section class="about-blog-section container">
+    <div class="about-blog-content">
+      <h2>Sobre o JustPCs</h2>
+      <p>No JustPCs, mergulhamos fundo no mundo da tecnologia para trazer a você as informações mais relevantes e atualizadas. De análises de hardware a guias de software, estamos aqui para descomplicar a área tech e ajudá-lo a tomar as melhores decisões.</p>
+      <a href="/sobre" class="button primary-button">Saiba Mais Sobre Nós</a>
+    </div>
+    <div class="about-blog-image">
+      <img src="https://images.pexels.com/photos/3184433/pexels-photo-3184433.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Equipe trabalhando em tecnologia" loading="lazy" />
+    </div>
+  </section>
+
+  <section class="popular-categories-section container">
+    <h2>Categorias Populares</h2>
+    <p>Explore os tópicos que estão em alta no momento.</p>
+    <div class="categories-grid">
+      <a href="/topicos/computadores" class="category-item" rel="nofollow">Computadores</a>
+      <a href="/topicos/inteligencia-artificial" class="category-item" rel="nofollow">Inteligência Artificial</a>
+      <a href="/topicos/games" class="category-item" rel="nofollow">Games</a>
+      <a href="/topicos/negocios" class="category-item" rel="nofollow">Negócios</a>
+      <a href="/topicos/notebooks" class="category-item" rel="nofollow">Notebooks</a>
+    </div>
+  </section>
+
+  <section class="newsletter-section">
+    <div class="container">
+      <h2>Assine Nossa Newsletter</h2>
+      <p>Receba as últimas notícias e artigos diretamente na sua caixa de entrada. Não perca nenhuma atualização do mundo da tecnologia!</p>
+      <form class="newsletter-form">
+        <input type="email" placeholder="Seu e-mail" aria-label="Seu endereço de e-mail" required />
+        <button type="submit" class="button primary-button">Assinar</button>
+      </form>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+	.recent-posts-section {
+		padding: var(--spacing-lg) 0;
+	}
+
+	.recent-posts-section h2 {
+		text-align: center;
+		margin-bottom: var(--spacing-xl);
+		font-size: var(--font-size-2xl);
+		color: var(--color-primary);
+	}
+
+	.posts-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: var(--spacing-lg);
+	}
+
+	@media (min-width: 768px) {
+		.posts-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.posts-grid {
+			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+
+  /* About Blog Section */
+  .about-blog-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xl);
+    padding: var(--spacing-2xl) 0;
+    text-align: center;
+  }
+
+  .about-blog-section h2 {
+    font-size: var(--font-size-2xl);
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .about-blog-section p {
+    font-size: var(--font-size-lg);
+    line-height: 1.7;
+    margin-bottom: var(--spacing-lg);
+    max-width: 800px;
+  }
+
+  .about-blog-content {
+    flex: 1;
+  }
+
+  .about-blog-content .primary-button:hover {
+    color: var(--color-text-light); /* Cor do texto branca ao passar o mouse */
+  }
+
+  .about-blog-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .about-blog-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-lg);
+  }
+
+  @media (min-width: 768px) {
+    .about-blog-section {
+      flex-direction: row;
+      text-align: left;
+    }
+    .about-blog-content {
+      padding-right: var(--spacing-xl);
+    }
+    .about-blog-image {
+      padding-left: var(--spacing-xl);
+    }
+    .about-blog-section:nth-child(even) { /* Alternate image/text on even sections */
+      flex-direction: row-reverse;
+    }
+    .about-blog-section:nth-child(even) .about-blog-content {
+      padding-right: 0;
+      padding-left: var(--spacing-xl);
+    }
+    .about-blog-section:nth-child(even) .about-blog-image {
+      padding-left: 0;
+      padding-right: var(--spacing-xl);
+    }
+  }
+
+  /* Popular Categories Section */
+  .popular-categories-section {
+    padding: var(--spacing-2xl) 0;
+    text-align: center;
+  }
+
+  .popular-categories-section h2 {
+    font-size: var(--font-size-2xl);
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .popular-categories-section p {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-xl);
+    color: var(--color-text-dark);
+  }
+
+  .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--spacing-md);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .category-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-md);
+    background-color: var(--color-accent);
+    color: var(--color-primary);
+    border-radius: var(--border-radius-md);
+    font-weight: 600;
+    font-size: var(--font-size-lg);
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .category-item:hover {
+    background-color: var(--color-primary);
+    color: var(--color-text-light);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+  }
+
+  /* Newsletter Section */
+  .newsletter-section {
+    background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-primary) 100%);
+    color: var(--color-text-light);
+    padding: var(--spacing-2xl) 0;
+    text-align: center;
+    margin-top: var(--spacing-2xl);
+  }
+
+  .newsletter-section h2 {
+    color: var(--color-text-light);
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .newsletter-section p {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-xl);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .newsletter-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .newsletter-form input[type="email"] {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: none;
+    border-radius: var(--border-radius-md);
+    font-size: var(--font-size-base);
+    color: var(--color-text-dark);
+  }
+
+  .newsletter-form button {
+    width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    .newsletter-form {
+      flex-direction: row;
+      gap: var(--spacing-md);
+    }
+    .newsletter-form input[type="email"] {
+      flex-grow: 1;
+    }
+    .newsletter-form button {
+      width: auto;
+      padding-left: var(--spacing-lg);
+      padding-right: var(--spacing-lg);
+    }
+  }
+</style>

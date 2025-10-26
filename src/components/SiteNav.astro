@@ -1,0 +1,177 @@
+---
+const {menu, generalSettings} = Astro.props;
+
+// Provide a fallback title if generalSettings or generalSettings.title is empty
+const siteTitle = generalSettings?.title || 'JustPCs';
+
+// Define fallback menu items if the menu from props is empty or undefined
+const fallbackMenuItems = [
+    { uri: '/', label: 'Home' },
+    { uri: '/sobre', label: 'Sobre' },
+    { uri: '/contato', label: 'Contato' }
+];
+
+// Use dynamic menu items if available, otherwise use fallback
+const menuItemsToRender = menu?.menuItems?.nodes?.length > 0 ? menu.menuItems.nodes : fallbackMenuItems;
+
+const logoUrl = "https://cdn.justpcs.com.br/wp-content/uploads/2024/03/justpcs-logo-blog-de-tecnologia.png";
+---
+
+<header class="site-header">
+    <div class="container header-content">
+        <a href="/" class='site-logo-link'>
+            <img src={logoUrl} alt={siteTitle} class="site-logo" />
+        </a>
+        <button class="hamburger" aria-label="Alternar navegação">&#9776;</button>
+        <nav class="main-nav">
+            <ul>
+            {menuItemsToRender.map(menuItem => {
+                return (<li>
+                            <a href={menuItem.uri || '/'}>{menuItem.label}</a>
+                        </li>)
+                })}
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<script client:load>
+    const hamburger = document.querySelector('.hamburger');
+    const nav = document.querySelector('.main-nav'); // Use the class for the nav
+
+    if (hamburger && nav) {
+        hamburger.addEventListener('click', toggleNav);
+    } else {
+        console.error('Hamburger or nav element not found in SiteNav.astro');
+    }
+
+    function toggleNav() {
+        nav.classList.toggle('show-nav');
+        hamburger.classList.toggle('is-active'); // Toggle a class for hamburger animation
+    }
+</script>
+
+<style>
+    .site-header {
+      background-color: var(--color-text-light);
+      box-shadow: var(--shadow-sm);
+      padding: var(--spacing-sm) 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .site-logo-link {
+        display: flex; /* Para alinhar a imagem */
+        align-items: center;
+        height: 40px; /* Altura fixa para o link do logo */
+    }
+
+    .site-logo {
+        height: 100%; /* A imagem preenche a altura do link */
+        width: auto; /* Mantém a proporção */
+    }
+
+    .hamburger {
+      display: none; /* Hidden by default on desktop */
+      font-size: var(--font-size-2xl);
+      color: var(--color-text-dark);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: var(--spacing-xs);
+      transition: color 0.2s ease-in-out;
+    }
+
+    .hamburger:hover {
+      color: var(--color-primary);
+    }
+
+    .main-nav ul {
+      display: flex;
+      gap: var(--spacing-md);
+      list-style: none; /* Ensure no bullet points */
+      margin: 0; /* Remove default margin */
+      padding: 0; /* Remove default padding */
+    }
+
+    .main-nav a {
+      color: var(--color-text-dark);
+      font-weight: 600;
+      padding: var(--spacing-xs) 0;
+      position: relative;
+      text-decoration: none; /* Remove underline */
+    }
+
+    .main-nav a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--color-primary);
+      transition: width 0.3s ease-in-out;
+    }
+
+    .main-nav a:hover::after,
+    .main-nav a.active::after {
+      width: 100%;
+    }
+
+    /* Mobile Styles */
+    @media (max-width: 767px) {
+      .hamburger {
+        display: block; /* Show hamburger on mobile */
+      }
+
+      .main-nav {
+        display: none; /* Hide nav by default on mobile */
+        flex-direction: column;
+        position: absolute;
+        top: 100%; /* Position below the header */
+        left: 0;
+        width: 100%;
+        background-color: var(--color-text-light);
+        box-shadow: var(--shadow-md);
+        padding: var(--spacing-sm) 0;
+        border-top: 1px solid var(--color-border);
+      }
+
+      .main-nav.show-nav {
+        display: flex; /* Show nav when active */
+      }
+
+      .main-nav ul {
+        flex-direction: column;
+        align-items: center;
+        gap: var(--spacing-sm);
+      }
+
+      .main-nav li {
+        width: 100%;
+        text-align: center;
+      }
+
+      .main-nav a {
+        display: block;
+        padding: var(--spacing-sm) var(--spacing-md);
+        width: 100%;
+        color: var(--color-text-dark);
+      }
+
+      .main-nav a::after {
+        display: none; /* Hide underline on mobile menu items */
+      }
+
+      .main-nav a:hover {
+        background-color: var(--color-accent);
+      }
+    }
+</style>

@@ -1,0 +1,54 @@
+---
+export const prerender = true;
+import MainLayout from "../layouts/MainLayout.astro";
+import Archive from "../components/templates/Archive.astro";
+import Single from "../components/templates/Single.astro";
+import { getNodeByURI, getAllUris } from "../lib/api.js"; // Corrigido o caminho
+const uri = `/${Astro.params.uri}/`;
+const data = await getNodeByURI(uri);
+const node = data.nodeByUri;
+
+export async function getStaticPaths(){
+    return await getAllUris();
+}
+
+let showHeroOnPage = true; // Default to true
+
+function resolveContentTemplate(node){ 
+    let template;
+    switch(node.__typename){
+        case 'Post':
+            template = Single;
+            showHeroOnPage = false; // Hide hero for posts
+            break; 
+        case 'Page':
+            template = Single;
+            showHeroOnPage = false; // Hide hero for pages
+            break; 
+        case 'Category':
+            template = Archive;
+            showHeroOnPage = false; // Hide hero for archives
+            break; 
+        case 'Tag':
+            template = Archive;
+            showHeroOnPage = false; // Hide hero for archives
+            break; 
+        default: 
+            template = Single;
+            showHeroOnPage = false; // Default to hide hero for unknown single types
+    }
+
+    return template;
+}
+
+const Template = resolveContentTemplate(node)
+
+---
+
+<MainLayout 
+ title={ node.title || node.name}
+ description={ node.excerpt }
+ showHero={showHeroOnPage} {/* Pass showHero prop */}
+>
+        <Template node={node}></Template>
+</MainLayout>

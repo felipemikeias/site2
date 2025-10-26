@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://justpcs.com.br/sitemap-index.xml
+# URL do sitemap para o seu site

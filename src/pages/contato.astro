@@ -1,0 +1,241 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+---
+
+<MainLayout title="Contato" description="Entre em contato com a equipe do JustPCs." showHero={false}>
+  <section class="page-section">
+    <div class="container">
+      <h1>Entre em Contato</h1>
+      <p>Tem alguma pergunta, sugestão ou quer colaborar? Adoraríamos ouvir você! Preencha o formulário abaixo ou use as informações de contato para falar conosco.</p>
+
+      <div class="contact-grid">
+        <div class="contact-form-wrapper">
+          <h2>Envie uma Mensagem</h2>
+          <form class="contact-form" action="#" method="POST">
+            <div class="form-group">
+              <label for="name">Nome:</label>
+              <input type="text" id="name" name="name" required aria-label="Seu nome completo">
+            </div>
+            <div class="form-group">
+              <label for="email">Email:</label>
+              <input type="email" id="email" name="email" required aria-label="Seu endereço de email">
+            </div>
+            <div class="form-group">
+              <label for="subject">Assunto:</label>
+              <input type="text" id="subject" name="subject" required aria-label="Assunto da mensagem">
+            </div>
+            <div class="form-group">
+              <label for="message">Mensagem:</label>
+              <textarea id="message" name="message" rows="6" required aria-label="Sua mensagem"></textarea>
+            </div>
+            <button type="submit" class="submit-button">Enviar Mensagem</button>
+          </form>
+        </div>
+
+        <div class="contact-info-wrapper">
+          <h2>Outras Formas de Contato</h2>
+          <p>Você também pode nos encontrar através dos seguintes canais:</p>
+          <ul>
+            <li><strong>Email:</strong> <a href="mailto:contato@justpcs.com.br">contato@justpcs.com.br</a></li>
+            <li><strong>Redes Sociais:</strong>
+              <div class="social-links">
+                <a href="https://twitter.com/justpcs" target="_blank" rel="noopener noreferrer" aria-label="Twitter do JustPCs">Twitter</a>
+                <a href="https://facebook.com/justpcs" target="_blank" rel="noopener noreferrer" aria-label="Facebook do JustPCs">Facebook</a>
+                <a href="https://instagram.com/justpcs" target="_blank" rel="noopener noreferrer" aria-label="Instagram do JustPCs">Instagram</a>
+              </div>
+            </li>
+            <li><strong>Endereço (apenas correspondência):</strong><br>
+                R. Mte. Notuma, 9 - Icaraí<br>
+                Caucaia - CE, 61624-474
+            </li>
+          </ul>
+          <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d995.3999871766882!2d-38.663677724365705!3d-3.67814236082788!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7c0cac83d586819%3A0xbc9359851505cc8b!2sR.%20Mte.%20Notuma%2C%209%20-%20Icara%C3%AD%2C%20Caucaia%20-%20CE%2C%2061624-474!5e0!3m2!1spt-BR!2sbr!4v1761507651152!5m2!1spt-BR!2sbr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .page-section {
+    padding: var(--spacing-xl) 0;
+  }
+
+  .page-section h1 {
+    font-size: var(--font-size-3xl);
+    color: var(--color-primary); /* Usando o novo azul */
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+    font-family: var(--font-family-heading);
+  }
+
+  .page-section p {
+    font-size: var(--font-size-base);
+    line-height: 1.7;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text-dark);
+    text-align: center;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-2xl);
+    margin-top: var(--spacing-xl);
+  }
+
+  @media (min-width: 768px) {
+    .contact-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .contact-form-wrapper, .contact-info-wrapper {
+    background-color: var(--color-text-light);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: var(--spacing-xl);
+  }
+
+  .contact-form-wrapper h2, .contact-info-wrapper h2 {
+    font-size: var(--font-size-2xl);
+    color: var(--color-secondary); /* Usando o novo lilás */
+    margin-bottom: var(--spacing-lg);
+    font-family: var(--font-family-heading);
+    text-align: center;
+  }
+
+  .contact-form .form-group {
+    margin-bottom: var(--spacing-md);
+  }
+
+  .contact-form label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text-dark);
+  }
+
+  .contact-form input[type="text"],
+  .contact-form input[type="email"],
+  .contact-form textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-md);
+    font-size: var(--font-size-base);
+    color: var(--color-text-dark);
+    background-color: var(--color-background);
+  }
+
+  .contact-form input:focus,
+  .contact-form textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(106, 90, 205, 0.2); /* Usando o RGB do --color-primary */
+  }
+
+  .contact-form textarea {
+    resize: vertical;
+  }
+
+  .submit-button {
+    display: block;
+    width: 100%;
+    padding: var(--spacing-md);
+    background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-secondary) 100%); /* Gradiente azul-lilás */
+    color: var(--color-text-light);
+    border: none;
+    border-radius: var(--border-radius-md);
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .submit-button:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+  }
+
+  .contact-info-wrapper p {
+    text-align: left;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .contact-info-wrapper ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .contact-info-wrapper ul li {
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-text-dark);
+    font-size: var(--font-size-base);
+  }
+
+  .contact-info-wrapper ul li strong {
+    color: var(--color-primary);
+  }
+
+  .contact-info-wrapper ul li a {
+    color: var(--color-secondary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .contact-info-wrapper ul li a:hover {
+    color: var(--color-primary);
+    text-decoration: underline;
+  }
+
+  .social-links {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-xs);
+  }
+
+  .social-links a {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background-color: var(--color-accent); /* Fundo azul claro */
+    color: var(--color-primary); /* Texto azul principal */
+    border-radius: var(--border-radius-md);
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.2s ease, color 0.2s ease; /* Transição para cor e fundo */
+  }
+
+  .social-links a:hover {
+    background-color: var(--color-primary); /* Fundo azul principal no hover */
+    color: var(--color-text-light); /* Texto branco no hover */
+  }
+
+  /* Estilos para o mapa */
+  .map-container {
+    width: 100%;
+    height: 450px; /* Altura padrão para o mapa */
+    border-radius: var(--border-radius-lg);
+    margin-top: var(--spacing-xl);
+    box-shadow: var(--shadow-md);
+    overflow: hidden; /* Garante que o iframe respeite o border-radius */
+  }
+
+  .map-container iframe {
+    width: 100%;
+    height: 100%;
+    border: 0; /* Remove a borda padrão do iframe */
+  }
+
+  @media (max-width: 767px) {
+    .map-container {
+      height: 300px; /* Altura menor para dispositivos móveis */
+    }
+  }
+</style>

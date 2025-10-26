@@ -1,0 +1,368 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+---
+
+<MainLayout title="Sobre Nós" description="Saiba mais sobre o JustPCs, seu blog de tecnologia." showHero={false}>
+  <section class="page-section">
+    <div class="container">
+      <h1>Sobre o JustPCs</h1>
+      <p>Bem-vindo ao <strong>JustPCs</strong>, o seu destino para tudo relacionado a computadores, celulares e o vasto mundo da tecnologia! Nossa missão é descomplicar a área de T.I, trazendo análises aprofundadas, guias práticos e as últimas notícias para entusiastas e curiosos.</p>
+      
+      <div class="about-content">
+        <div class="about-text">
+          <h2>Objetivos</h2>
+          <p>Acreditamos que a tecnologia deve ser acessível e compreensível para todos. No JustPCs, nos dedicamos a fornecer conteúdo de alta qualidade que informa, educa e inspira. Seja você um gamer, um profissional de TI, um estudante ou apenas alguém que quer se manter atualizado, temos algo para você.</p>
+          
+          <h2>O Que Cobrimos</h2>
+          <ul>
+            <li><strong>Computadores:</strong> Desktops, notebooks, componentes, dicas de montagem e otimização.</li>
+            <li><strong>Celulares:</strong> Análises de smartphones, comparativos, aplicativos essenciais e truques.</li>
+            <li><strong>Tecnologia Geral:
+            </strong> Notícias do setor, inovações, inteligência artificial, gadgets e tendências futuras.</li>
+            <li><strong>Guias e Tutoriais:</strong> Passo a passo para resolver problemas, configurar dispositivos e aproveitar ao máximo sua tecnologia.</li>
+          </ul>
+        </div>
+        <div class="about-image">
+          <img src="https://cdn.justpcs.com.br/wp-content/uploads/2022/05/about-us-team-scaled-1.webp" alt="Pessoas trabalhando com tecnologia" loading="lazy" />
+        </div>
+      </div>
+
+      <h2>Nossa Equipe</h2>
+      <p>Somos um grupo de apaixonados por tecnologia, com anos de experiência no setor. Nossa equipe é composta por redatores, analistas e desenvolvedores que compartilham um objetivo comum: trazer o melhor conteúdo tecnológico diretamente para você.</p>
+      <p>Obrigado por fazer parte da comunidade JustPCs!</p>
+    </div>
+  </section>
+
+  <section class="mission-vision-values-section">
+    <div class="container">
+      <h2>Nossos Pilares</h2>
+      <div class="pillars-grid">
+        <div class="pillar-item">
+          <h3>Missão</h3>
+          <p>Descomplicar a área de T.I, fornecendo conteúdo de alta qualidade que informa, educa e inspira entusiastas e profissionais da área.</p>
+        </div>
+        <div class="pillar-item">
+          <h3>Visão</h3>
+          <p>Ser a principal referência em blogs de tecnologia no Brasil, reconhecido pela precisão, profundidade e paixão em tudo que fazemos.</p>
+        </div>
+        <div class="pillar-item">
+          <h3>Valores</h3>
+          <ul>
+            <li><strong>Inovação:</strong> Sempre buscando o novo e o melhor.</li>
+            <li><strong>Transparência:</strong> Conteúdo honesto e imparcial.</li>
+            <li><strong>Comunidade:</strong> Valorizando a interação e o aprendizado coletivo.</li>
+            <li><strong>Excelência:</strong> Dedicação em cada artigo e análise.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="team-section">
+    <div class="container">
+      <h2>Conheça Nossa Equipe</h2>
+      <p>Por trás de cada artigo e análise, há um time dedicado de especialistas e entusiastas.</p>
+      <div class="team-grid">
+        <div class="team-member">
+          <img src="https://cdn.justpcs.com.br/wp-content/uploads/jose-silva-justpcs.webp" alt="Foto de José Silva" loading="lazy" />
+          <div class="member-info">
+            <h3>José Silva</h3>
+            <p>Editor Chefe</p>
+          </div>
+        </div>
+        <div class="team-member team-member-reversed">
+          <div class="member-info">
+            <h3>Pedro Costa</h3>
+            <p>Redator especializado em TI</p>
+          </div>
+          <img src="https://cdn.justpcs.com.br/wp-content/uploads/pedro-costa-redator-justpcs.webp" alt="Foto de Pedro Costa" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact-banner-section">
+    <div class="container">
+      <h2>Ficou com alguma dúvida?</h2>
+      <p>Entre em contato conosco para tirar suas dúvidas, dar sugestões ou colaborar!</p>
+      <a href="/contato" class="button primary-button follow-button">Entre em Contato</a>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .page-section {
+    padding: var(--spacing-xl) 0;
+  }
+
+  .page-section h1 {
+    font-size: var(--font-size-3xl);
+    color: var(--color-primary);
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+    font-family: var(--font-family-heading);
+  }
+
+  .page-section h2 {
+    font-size: var(--font-size-2xl);
+    color: var(--color-text-dark);
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-md);
+    font-family: var(--font-family-heading);
+  }
+
+  .page-section p {
+    font-size: var(--font-size-base);
+    line-height: 1.7;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text-dark);
+  }
+
+  .page-section ul {
+    list-style: disc;
+    padding-left: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .page-section ul li {
+    margin-bottom: var(--spacing-xs);
+    line-height: 1.6;
+    color: var(--color-text-dark);
+  }
+
+  .about-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+    margin-top: var(--spacing-lg);
+  }
+
+  .about-text {
+    flex: 1;
+  }
+
+  .about-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .about-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-lg);
+  }
+
+  @media (min-width: 768px) {
+    .about-content {
+      flex-direction: row;
+      align-items: center;
+    }
+    .about-text {
+      padding-right: var(--spacing-xl);
+    }
+    .about-image {
+      padding-left: var(--spacing-xl);
+    }
+  }
+
+  /* Mission, Vision, Values Section */
+  .mission-vision-values-section {
+    padding: var(--spacing-2xl) 0;
+    background-color: var(--color-background-light); /* Um fundo levemente diferente */
+    text-align: center;
+  }
+
+  .mission-vision-values-section h2 {
+    font-size: var(--font-size-2xl);
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-xl);
+    font-family: var(--font-family-heading);
+  }
+
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 768px) {
+    .pillars-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .pillar-item {
+    background-color: var(--color-text-light);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-sm);
+    padding: var(--spacing-xl);
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .pillar-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .pillar-item h3 {
+    font-size: var(--font-size-xl);
+    color: var(--color-secondary);
+    margin-bottom: var(--spacing-md);
+    font-family: var(--font-family-heading);
+  }
+
+  .pillar-item p, .pillar-item ul {
+    font-size: var(--font-size-base);
+    line-height: 1.6;
+    color: var(--color-text-dark);
+  }
+
+  .pillar-item ul {
+    list-style: none;
+    padding: 0;
+    margin-top: var(--spacing-sm);
+  }
+
+  .pillar-item ul li {
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .pillar-item ul li strong {
+    color: var(--color-primary);
+  }
+
+  /* Team Section */
+  .team-section {
+    padding: var(--spacing-2xl) 0;
+    text-align: center;
+  }
+
+  .team-section h2 {
+    font-size: var(--font-size-2xl);
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-md);
+    font-family: var(--font-family-heading);
+  }
+
+  .team-section p {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-xl);
+    color: var(--color-text-dark);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .team-grid {
+    display: flex; /* Use flexbox for the grid */
+    flex-direction: column; /* Stack members vertically on mobile */
+    gap: var(--spacing-2xl); /* Increased gap between members */
+    max-width: 1000px; /* Adjusted max-width for better layout */
+    margin: 0 auto;
+  }
+
+  @media (min-width: 768px) {
+    .team-grid {
+      flex-direction: column; /* Keep vertical stacking for larger screens too, as per user's specific layout request */
+    }
+  }
+
+  .team-member {
+    background-color: var(--color-text-light);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-sm);
+    padding: var(--spacing-lg);
+    text-align: left; /* Align text to left within the member card */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex; /* Use flexbox for image and info */
+    align-items: center;
+    gap: var(--spacing-lg); /* Gap between image and text */
+  }
+
+  .team-member:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .team-member img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0; /* Prevent image from shrinking */
+    border: 3px solid var(--color-primary);
+    margin: 0; /* Remove previous auto margin */
+  }
+
+  .team-member .member-info {
+    flex: 1; /* Allow text info to take remaining space */
+  }
+
+  .team-member h3 {
+    font-size: var(--font-size-lg);
+    color: var(--color-secondary);
+    margin-bottom: var(--spacing-xs);
+    font-family: var(--font-family-heading);
+  }
+
+  .team-member p {
+    font-size: var(--font-size-base);
+    color: var(--color-text-dark);
+    margin-bottom: 0;
+  }
+
+  .team-member-reversed {
+    flex-direction: row-reverse; /* Reverse order for image and info */
+  }
+
+  /* Contact Banner Section */
+  .contact-banner-section {
+    background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-primary) 100%);
+    color: var(--color-text-light);
+    padding: var(--spacing-2xl) 0;
+    text-align: center;
+    margin-top: var(--spacing-2xl);
+  }
+
+  .contact-banner-section h2 {
+    color: var(--color-text-light);
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--spacing-md);
+    font-family: var(--font-family-heading);
+  }
+
+  .contact-banner-section p {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-xl);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .follow-button {
+    display: inline-block;
+    padding: var(--spacing-md) var(--spacing-xl);
+    background-color: #007bff; /* Azul vibrante para contraste */
+    color: var(--color-text-light); /* Texto branco para legibilidade */
+    border: none;
+    border-radius: var(--border-radius-md);
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.3s ease, color 0.3s ease;
+    box-shadow: var(--shadow-md);
+  }
+
+  .follow-button:hover {
+    background-color: #0056b3; /* Azul mais escuro no hover */
+    color: var(--color-text-light); /* Texto branco no hover */
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+  }
+</style>

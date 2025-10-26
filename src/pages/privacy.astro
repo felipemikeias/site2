@@ -1,0 +1,130 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+---
+
+<MainLayout title="Política de Privacidade" description="Nossa política de privacidade detalhada." showHero={false}>
+  <section class="privacy-policy-section container">
+    <h1>Política de Privacidade</h1>
+    <p>Última atualização: 23 de Julho de 2024</p>
+
+    <p>A sua privacidade é importante para nós. Esta Política de Privacidade descreve como a JustPCs coleta, usa e protege as suas informações pessoais quando você visita o nosso site.</p>
+
+    <h2>1. Informações que Coletamos</h2>
+    <h3>Informações Pessoais</h3>
+    <p>Podemos coletar informações de identificação pessoal, como o seu nome e endereço de e-mail, quando você se inscreve na nossa newsletter, deixa um comentário ou nos contata diretamente.</p>
+
+    <h3>Dados de Uso</h3>
+    <p>Coletamos automaticamente informações sobre como o site é acessado e usado ("Dados de Uso"). Estes Dados de Uso podem incluir informações como o endereço de Protocolo de Internet do seu computador (por exemplo, endereço IP), tipo de navegador, versão do navegador, as páginas do nosso Serviço que você visita, a hora e a data da sua visita, o tempo gasto nessas páginas, identificadores únicos de dispositivo e outros dados de diagnóstico.</p>
+
+    <h2>2. Como Usamos as Suas Informações</h2>
+    <p>A JustPCs usa os dados coletados para diversas finalidades:</p>
+    <ul>
+      <li>Para fornecer e manter o nosso Serviço</li>
+      <li>Para notificá-lo sobre alterações no nosso Serviço</li>
+      <li>Para permitir que você participe de recursos interativos do nosso Serviço quando você optar por fazê-lo</li>
+      <li>Para fornecer suporte ao cliente</li>
+      <li>Para coletar análises ou informações valiosas para que possamos melhorar o nosso Serviço</li>
+      <li>Para monitorar o uso do nosso Serviço</li>
+      <li>Para detectar, prevenir e resolver problemas técnicos</li>
+      <li>Para enviar newsletters e comunicações de marketing, caso você tenha consentido em recebê-las</li>
+    </ul>
+
+    <h2>3. Divulgação de Dados</h2>
+    <p>Podemos divulgar as suas informações pessoais de boa fé, acreditando que tal ação é necessária para:</p>
+    <ul>
+      <li>Cumprir uma obrigação legal</li>
+      <li>Proteger e defender os direitos ou propriedade da JustPCs</li>
+      <li>Prevenir ou investigar possíveis irregularidades relacionadas ao Serviço</li>
+      <li>Proteger a segurança pessoal dos usuários do Serviço ou do público</li>
+      <li>Proteger contra responsabilidade legal</li>
+    </ul>
+
+    <h2>4. Segurança dos Dados</h2>
+    <p>A segurança dos seus dados é importante para nós, mas lembre-se que nenhum método de transmissão pela Internet, ou método de armazenamento eletrônico é 100% seguro. Embora nos esforcemos para usar meios comercialmente aceitáveis para proteger os seus Dados Pessoais, não podemos garantir a sua segurança absoluta.</p>
+
+    <h2>5. Links para Outros Sites</h2>
+    <p>Nosso Serviço pode conter links para outros sites que não são operados por nós. Se você clicar em um link de terceiros, você será direcionado para o site desse terceiro. Aconselhamos vivamente que reveja a Política de Privacidade de todos os sites que visita.</p>
+    <p>Não temos controle e não assumimos responsabilidade pelo conteúdo, políticas de privacidade ou práticas de quaisquer sites ou serviços de terceiros.</p>
+
+    <h2>6. Privacidade de Crianças</h2>
+    <p>Nosso Serviço não se destina a menores de 18 anos ("Crianças").</p>
+    <p>Não coletamos intencionalmente informações de identificação pessoal de menores de 18 anos. Se você é pai/mãe ou responsável e sabe que seus filhos nos forneceram Dados Pessoais, entre em contato conosco. Se tomarmos conhecimento de que coletamos Dados Pessoais de crianças sem verificação do consentimento dos pais, tomaremos medidas para remover essas informações de nossos servidores.</p>
+
+    <h2>7. Alterações a Esta Política de Privacidade</h2>
+    <p>Podemos atualizar a nossa Política de Privacidade de tempos em tempos. Iremos notificá-lo de quaisquer alterações, publicando a nova Política de Privacidade nesta página.</p>
+    <p>Aconselhamos que reveja esta Política de Privacidade periodicamente para quaisquer alterações. As alterações a esta Política de Privacidade são eficazes quando são publicadas nesta página.</p>
+
+    <h2>8. Contato</h2>
+    <p>Se você tiver alguma dúvida sobre esta Política de Privacidade, entre em contato conosco:</p>
+    <ul>
+      <li>Por e-mail: <a href="mailto:contato@justpcs.com.br">contato@justpcs.com.br</a></li>
+    </ul>
+  </section>
+</MainLayout>
+
+<style>
+  .privacy-policy-section {
+    max-width: 800px;
+    margin: var(--spacing-xl) auto;
+    padding: var(--spacing-lg);
+    background-color: var(--color-background-light);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-md);
+  }
+
+  .privacy-policy-section h1 {
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-3xl);
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-md);
+    text-align: center;
+  }
+
+  .privacy-policy-section h2 {
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-xl);
+    color: var(--color-text-dark);
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
+    border-bottom: 2px solid var(--color-secondary);
+    padding-bottom: var(--spacing-xs);
+  }
+
+  .privacy-policy-section h3 {
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-lg);
+    color: var(--color-text-dark);
+    margin-top: var(--spacing-md);
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .privacy-policy-section p,
+  .privacy-policy-section ul {
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-base);
+    line-height: 1.7;
+    color: var(--color-text-dark);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .privacy-policy-section ul {
+    list-style: disc;
+    margin-left: var(--spacing-lg);
+    padding-left: 0;
+  }
+
+  .privacy-policy-section li {
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .privacy-policy-section a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .privacy-policy-section a:hover {
+    color: var(--color-secondary);
+    text-decoration: underline;
+  }
+</style>

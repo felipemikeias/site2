@@ -1,0 +1,243 @@
+---
+import type { MenuItem, GeneralSettings, Category } from '../lib/api'; // Importar tipos se definidos, ou usar 'any' temporariamente
+
+interface Props {
+    menu: {
+        menuItems: {
+            nodes: MenuItem[];
+        };
+    };
+    generalSettings: GeneralSettings;
+    categories: Category[]; // Nova prop para categorias
+}
+
+const { menu, generalSettings, categories } = Astro.props;
+
+// Fallback para menuItems se for undefined
+// const footerMenuItems = menu?.menuItems?.nodes || []; // Não será mais usado diretamente para Navegação
+const footerCategories = categories || []; // Fallback para categorias
+
+// Links estáticos para a seção "Navegação"
+const navegacaoLinks = [
+    { label: 'Home', uri: '/' },
+    { label: 'Sobre', uri: '/sobre' }, // Assumindo que você terá uma página /sobre
+    { label: 'Contato', uri: '/contato' }, // Assumindo que você terá uma página /contato
+];
+
+const logoUrl = "https://cdn.justpcs.com.br/wp-content/uploads/2024/03/justpcs-logo-original-blog-de-tecnologia.png";
+---
+
+<footer class="site-footer">
+    <div class="container footer-grid">
+        <div class="footer-section footer-about">
+            <a href="/" class="footer-logo-link">
+                <img src={logoUrl} alt={generalSettings?.title || 'JustPCs Logo'} class="footer-logo" />
+            </a>
+            <p class="footer-description">
+                {generalSettings?.description || 'Seu blog sobre PCs, tecnologia e tudo o que você precisa saber para montar e otimizar sua máquina.'}
+            </p>
+        </div>
+
+        <div class="footer-section footer-nav-menu">
+            <h3>Navegação</h3>
+            <ul>
+                {navegacaoLinks.map(item => (
+                    <li><a href={item.uri}>{item.label}</a></li>
+                ))}
+            </ul>
+        </div>
+
+        <div class="footer-section footer-categories"> {/* Nova seção para categorias */}
+            <h3>Categorias</h3>
+            <ul>
+                {footerCategories.length > 0 ? footerCategories.map(category => (
+                    <li><a href={category.uri}>{category.name}</a></li>
+                )) : <li><p>Nenhuma categoria encontrada.</p></li>}
+            </ul>
+        </div>
+
+        <div class="footer-section footer-contact">
+            <h3>Contato</h3>
+            <p>Email: <a href="mailto:contato@justpcs.com.br">contato@justpcs.com.br</a></p>
+            <p>Endereço: R. Mte. Notuma, 9 - Icaraí<br>Caucaia - CE, 61624-474</p>
+        </div>
+    </div>
+
+    <div class="container footer-bottom">
+        <p>&copy; {new Date().getFullYear()} {generalSettings?.title || 'JustPCs'}. Todos os direitos reservados.</p>
+        <nav class="footer-legal-nav">
+            <ul>
+                <li><a href="/privacy">Política de Privacidade</a></li>
+                {/* Removido: <li><a href="/terms">Termos de Serviço</a></li> */}
+            </ul>
+        </nav>
+    </div>
+</footer>
+
+<style>
+    .site-footer {
+        background-color: var(--color-text-dark);
+        color: var(--color-text-light);
+        padding: var(--spacing-xl) 0 var(--spacing-md) 0; /* Mais padding em cima */
+        margin-top: var(--spacing-2xl);
+        font-size: var(--font-size-sm);
+    }
+
+    .footer-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: var(--spacing-xl);
+        padding-bottom: var(--spacing-xl);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-section {
+        text-align: center; /* Padrão para mobile */
+    }
+
+    .footer-section h3 {
+        color: var(--color-text-light); /* Títulos brancos */
+        font-family: var(--font-family-heading);
+        font-size: var(--font-size-lg);
+        margin-bottom: var(--spacing-md);
+        position: relative;
+        padding-bottom: var(--spacing-xs);
+        /* Removido display: inline-block para simplificar o alinhamento */
+    }
+
+    .footer-section h3::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 0;
+        width: 40px;
+        height: 2px;
+        background-color: var(--color-secondary);
+    }
+
+    .footer-about .footer-logo-link {
+        display: inline-block;
+        margin-bottom: var(--spacing-md);
+    }
+
+    .footer-logo {
+        max-width: 150px; /* Tamanho da logo */
+        height: auto;
+        /* filter: brightness(0) invert(1); REMOVIDO: Filtro branco */
+    }
+
+    .footer-description {
+        color: rgba(255, 255, 255, 0.7);
+        line-height: 1.7;
+        margin-bottom: 0;
+        max-width: 350px; /* Descrição ainda menos larga */
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .footer-nav-menu ul,
+    .footer-contact p,
+    .footer-categories ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .footer-nav-menu li,
+    .footer-contact p,
+    .footer-categories li {
+        margin-bottom: var(--spacing-xs);
+    }
+
+    .footer-nav-menu a,
+    .footer-contact a,
+    .footer-categories a {
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+    .footer-nav-menu a:hover,
+    .footer-contact a:hover,
+    .footer-categories a:hover {
+        color: var(--color-primary);
+    }
+
+    .footer-bottom {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: var(--spacing-sm);
+        padding-top: var(--spacing-md);
+    }
+
+    .footer-bottom p {
+        font-size: var(--font-size-sm);
+        color: rgba(255, 255, 255, 0.6);
+        margin-bottom: 0;
+    }
+
+    .footer-legal-nav ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: var(--spacing-md);
+    }
+
+    .footer-legal-nav a {
+        color: rgba(255, 255, 255, 0.6);
+        font-size: var(--font-size-sm);
+        transition: color 0.2s ease;
+    }
+
+    .footer-legal-nav a:hover {
+        color: var(--color-primary);
+    }
+
+    /* Media Queries for Responsiveness */
+    @media (min-width: 768px) {
+        .footer-grid {
+            grid-template-columns: repeat(2, 1fr);
+            /* Removido text-align: left aqui para aplicar diretamente nas seções */
+        }
+
+        .footer-section {
+            text-align: left; /* Alinhamento à esquerda para tablet e desktop */
+        }
+
+        .footer-section h3::after {
+            left: 0;
+            transform: translateX(0);
+        }
+
+        .footer-about {
+            grid-column: span 2; /* Ocupa duas colunas em tablet */
+        }
+
+        .footer-description {
+            margin-left: 0; /* Remove o auto margin para alinhar à esquerda */
+            margin-right: auto;
+        }
+
+        .footer-bottom {
+            flex-direction: row;
+            justify-content: space-between;
+            text-align: left;
+        }
+        .footer-legal-nav ul {
+            justify-content: flex-end;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .footer-grid {
+            grid-template-columns: 2fr 1fr 1fr 1fr; /* Mais colunas para desktop */
+        }
+
+        .footer-about {
+            grid-column: span 1; /* Volta a ocupar uma coluna */
+        }
+    }
+</style>

@@ -1,0 +1,290 @@
+---
+import PostCard from "../PostCard.astro";
+import AuthorCard from "../AuthorCard.astro";
+import { getRelatedPosts, getRecentPosts } from "../../lib/api.js"; // Importa getRecentPosts
+
+const { node } = Astro.props;
+
+console.log('Single.astro: Node received:', node);
+
+let relatedPosts = [];
+
+if (node.__typename === 'Post' && node.categories && node.categories.nodes.length > 0) {
+    console.log('Single.astro: Node is a Post with categories. Attempting to fetch category-based related posts.');
+    const firstCategorySlug = node.categories.nodes[0].slug;
+    console.log('Single.astro: First category slug:', firstCategorySlug);
+    console.log('Single.astro: Current post URI (for exclusion):', node.uri);
+
+    if (firstCategorySlug) {
+        relatedPosts = await getRelatedPosts(firstCategorySlug, node.uri, 4);
+        console.log('Single.astro: Category-based related posts fetched:', relatedPosts);
+    } else {
+        console.warn('Single.astro: firstCategorySlug is undefined or null. Cannot fetch category-based related posts.');
+    }
+} else {
+    console.log('Single.astro: Node is not a Post or has no categories. Skipping category-based related posts fetch.');
+}
+
+// Fallback logic: If no related posts were found, get the 2 most recent posts (excluding the current one)
+if (relatedPosts.length === 0 && node.__typename === 'Post') {
+    console.log('Single.astro: No category-based related posts found. Fetching recent posts as fallback.');
+    const recentPosts = await getRecentPosts(5); // Fetch a few more to ensure we can get 2 distinct ones
+    const fallbackPosts = recentPosts
+        .filter(post => post.uri !== node.uri) // Exclui o post atual
+        .slice(0, 2); // Pega os 2 primeiros
+
+    if (fallbackPosts.length > 0) {
+        relatedPosts = fallbackPosts;
+        console.log('Single.astro: Fallback recent posts selected:', relatedPosts);
+    } else {
+        console.log('Single.astro: No suitable fallback recent posts found.');
+    }
+}
+--- 
+
+<div class="single-post-container">
+    <h1 class="post-title">{node.title}</h1>
+
+    <div class="post-meta">
+        <!-- Display categories links if node has terms -->
+        { node.categories && node.categories.nodes.length > 0 ?
+            <div class="category-tags">
+                {node.categories.nodes.map(category => (
+                    <a class='term-link' href={category.uri}>{category.name}</a>
+                ))}
+            </div> :     
+            null 
+        }
+        <!-- Only show date if node is a Post -->
+        {
+            node.__typename === 'Post' ? 
+            (<p class='post-date'>
+                Publicado em <time datetime={node.date}>{new Date(node.date).toLocaleDateString('pt-BR', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
+            </p>):
+            null
+        }
+    </div>
+
+    {node.featuredImage?.node?.mediaItemUrl && (
+        <img class='featured-image' 
+            src={node.featuredImage.node.mediaItemUrl} 
+            srcset={node.featuredImage.node.srcSet} 
+            alt={node.featuredImage.node.altText}
+            loading='lazy'
+            width={node.featuredImage.node.mediaDetails?.width}
+            height={node.featuredImage.node.mediaDetails?.height}
+        >
+    )}
+    
+    <article class="post-content" set:html={node.content}>
+    </article>
+
+    <!-- Author Card -->
+    {node.__typename === 'Post' && (
+        <AuthorCard />
+    )}
+
+    {relatedPosts.length > 0 && (
+        <section class="related-posts-section">
+            <h2>Posts Relacionados</h2>
+            <div class="related-posts-grid">
+                {relatedPosts.map(post => (
+                    <PostCard post={post} simplified={true} />
+                ))}
+            </div>
+        </section>
+    )}
+    {/* Removido o bloco de "Nenhum post relacionado encontrado" pois sempre haverá fallback */}
+</div>
+
+<style is:global>
+    /* Estilos para blocos de imagem do WordPress dentro do conteúdo */
+    .wp-block-image img {
+        width: 100%;
+        height: auto;  
+        border-radius: var(--border-radius-md);
+        margin-bottom: var(--spacing-md);
+    }
+    .wp-block-image figcaption {
+        font-size: var(--font-size-sm);
+        color: var(--color-text-dark);
+        text-align: center;
+        margin-top: var(--spacing-xs);
+    }
+    /* Estilos para outros blocos comuns do WordPress */
+    .wp-block-paragraph {
+        margin-bottom: var(--spacing-sm);
+    }
+    .wp-block-heading h1, .wp-block-heading h2, .wp-block-heading h3, .wp-block-heading h4, .wp-block-heading h5, .wp-block-heading h6 {
+        margin-top: var(--spacing-md);
+        margin-bottom: var(--spacing-sm);
+    }
+    .wp-block-list {
+        margin-left: var(--spacing-md);
+        margin-bottom: var(--spacing-sm);
+    }
+    .wp-block-quote {
+        border-left: 4px solid var(--color-primary);
+        padding-left: var(--spacing-sm);
+        margin: var(--spacing-md) 0;
+        font-style: italic;
+        color: var(--color-text-dark);
+    }
+</style>
+
+<style>
+    .single-post-container {
+        max-width: 800px; /* Limita a largura do conteúdo para melhor legibilidade */
+        margin: 0 auto;
+        padding: var(--spacing-lg) 0;
+    }
+
+    .post-title {
+        font-size: var(--font-size-3xl);
+        color: var(--color-text-dark);
+        margin-bottom: var(--spacing-md);
+        text-align: center;
+    }
+
+    .post-meta {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: var(--spacing-sm);
+        margin-bottom: var(--spacing-lg);
+    }
+
+    .category-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-xs);
+    }
+
+    a.term-link {
+        display: inline-flex;
+        align-items: center;
+        padding: var(--spacing-xs) var(--spacing-sm);
+        background-color: var(--color-primary); /* Usando a cor primária */
+        color: var(--color-text-light);
+        border-radius: var(--border-radius-sm); /* Bordas mais suaves */
+        font-size: var(--font-size-sm);
+        font-weight: 600;
+        text-decoration: none;
+        transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+
+    a.term-link:hover {
+        background-color: var(--color-secondary); /* Cor secundária no hover */
+        transform: translateY(-1px);
+    }
+
+    .post-date {
+        color: var(--color-text-dark);
+        font-size: var(--font-size-sm);
+        font-weight: 400;
+        opacity: 0.8;
+    }
+
+    img.featured-image {
+        width: 100%;
+        height: auto;
+        border-radius: var(--border-radius-lg); /* Bordas mais arredondadas */
+        margin-bottom: var(--spacing-xl);
+        box-shadow: var(--shadow-md); /* Sombra sutil */
+    }
+
+    .post-content {
+        font-size: var(--font-size-base);
+        line-height: 1.8;
+        color: var(--color-text-dark);
+    }
+
+    .post-content h2 {
+        font-size: var(--font-size-xl);
+        margin-top: var(--spacing-lg);
+        margin-bottom: var(--spacing-md);
+        color: var(--color-primary);
+    }
+
+    .post-content h3 {
+        font-size: var(--font-size-lg);
+        margin-top: var(--spacing-md);
+        margin-bottom: var(--spacing-sm);
+        color: var(--color-secondary);
+    }
+
+    .post-content p {
+        margin-bottom: var(--spacing-md);
+    }
+
+    .post-content ul,
+    .post-content ol {
+        margin-left: var(--spacing-lg);
+        margin-bottom: var(--spacing-md);
+    }
+
+    .post-content li {
+        margin-bottom: var(--spacing-xs);
+    }
+
+    .post-content a {
+        color: var(--color-primary);
+        text-decoration: underline;
+    }
+
+    .post-content a:hover {
+        color: var(--color-secondary);
+    }
+
+    /* Estilos para a nova seção de "Posts Relacionados" */
+    .related-posts-section {
+        margin-top: var(--spacing-xl);
+        padding-top: var(--spacing-xl);
+        border-top: 1px solid var(--color-border);
+        text-align: center;
+    }
+
+    .related-posts-section h2 {
+        font-size: var(--font-size-2xl);
+        color: var(--color-primary);
+        margin-bottom: var(--spacing-lg);
+    }
+
+    .related-posts-grid {
+        display: grid;
+        grid-template-columns: 1fr; /* Uma coluna por padrão */
+        gap: var(--spacing-lg);
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    @media (min-width: 768px) {
+        .related-posts-grid {
+            grid-template-columns: repeat(2, 1fr); /* Duas colunas em telas maiores */
+        }
+    }
+
+    .related-post-item h3 { /* Mantido para compatibilidade, mas não usado diretamente */
+        font-size: var(--font-size-lg);
+        color: var(--color-text-dark);
+        margin-bottom: var(--spacing-md);
+    }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+        .post-title {
+            font-size: var(--font-size-2xl);
+        }
+        .single-post-container {
+            padding: var(--spacing-md) 0;
+        }
+        .post-meta {
+            flex-direction: column;
+            gap: var(--spacing-xs);
+        }
+        .post-date {
+            text-align: center;
+        }
+    }
+</style>

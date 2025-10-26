@@ -1,0 +1,78 @@
+---
+
+---
+
+<section class="hero-section">
+    <div class="hero-content container">
+        <h1>Bem-vindo ao JustPCs! Seu Guia Completo da Tecnologia</h1>
+        <p>Insights, análises e tutoriais sobre desenvolvimento web, hardware, software e as últimas tendências tecnológicas. Sua jornada começa aqui!</p>
+    </div>
+</section>
+
+<style>
+    .hero-section {
+        box-sizing: border-box;
+        min-height: 500px; /* Increased height for more impact */
+        background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+        /* Removed border-radius and margin-bottom for full-width */
+        color: var(--color-text-light);
+        padding: var(--spacing-3xl) var(--spacing-md); /* Adjusted padding */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        box-shadow: var(--shadow-md); /* Added subtle shadow */
+    }
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'); /* Example Pexels image */
+        background-size: cover;
+        background-position: center;
+        opacity: 0.3; /* Adjusted opacity for better text contrast */
+        z-index: 0;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 1;
+        max-width: 900px; /* Slightly wider content area */
+    }
+
+    .hero-content h1 {
+       font-size: var(--font-size-3xl);
+       font-family: var(--font-family-heading);
+       font-weight: 800; /* Bolder H1 */
+       margin-bottom: var(--spacing-md);
+       color: var(--color-text-light);
+       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Text shadow for readability */
+    }
+
+    .hero-content p {
+        font-size: var(--font-size-xl); /* Larger description text */
+        line-height: 1.8;
+        color: var(--color-text-light);
+        opacity: 0.95; /* Slightly less opaque for better contrast */
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2); /* Text shadow for readability */
+    }
+
+    @media (max-width: 767px) {
+        .hero-section {
+            min-height: 400px; /* Adjusted height for mobile */
+            padding: var(--spacing-xl) var(--spacing-sm);
+        }
+        .hero-content h1 {
+            font-size: var(--font-size-2xl);
+        }
+        .hero-content p {
+            font-size: var(--font-size-base);
+        }
+    }
+</style>

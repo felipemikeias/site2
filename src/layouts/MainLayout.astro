@@ -1,0 +1,127 @@
+---
+import SiteNav from "../components/SiteNav.astro"; 
+import SiteFooter from "../components/SiteFooter.astro";
+import Hero from "../components/Hero.astro";
+import { navQuery, getAllCategories } from "../lib/api"; // Importar getAllCategories
+
+// Import global styles
+import '../styles/global.css';
+
+const navData = await navQuery();
+const categoriesData = await getAllCategories(); // Buscar todas as categorias
+
+// Provide default empty objects for menus and generalSettings if navData or its properties are undefined/null
+const menus = navData?.menus || { nodes: [] };
+const generalSettings = navData?.generalSettings || { title: 'JustPCs', url: '', description: '' }; // Added 'JustPCs' as fallback title
+
+// Safely access primaryMenu, providing a default empty array if menus or nodes are undefined
+const primaryMenu = menus?.nodes?.[0] || { menuItems: { nodes: [] } };
+
+// Log data to help debug if header is not appearing
+console.log('MainLayout: primaryMenu data:', primaryMenu);
+console.log('MainLayout: generalSettings data:', generalSettings);
+console.log('MainLayout: categoriesData:', categoriesData); // Log categories data
+
+const { 
+  title, 
+  description,
+  ogImage = '/default-og-image.jpg', // Imagem padrão para Open Graph
+  showHero = true // Nova propriedade para controlar a exibição do Hero
+} = Astro.props;
+
+const pageTitle = title ? `${title} | ${generalSettings?.title || ''}` : generalSettings?.title || 'JustPCs';
+const pageDescription = description || generalSettings?.description || 'Um blog sobre PCs e tecnologia.';
+const pageUrl = Astro.url.href;
+
+const siteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": generalSettings?.title || 'JustPCs',
+  "url": Astro.site,
+  "description": generalSettings?.description || 'Um blog sobre PCs e tecnologia.',
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": `${Astro.site}/search?q={search_term_string}`,
+    "query-input": "required name=search_term_string"
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "R. Mte. Notuma, 9",
+    "addressLocality": "Caucaia",
+    "addressRegion": "CE",
+    "postalCode": "61624-474",
+    "addressCountry": "BR"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": -3.67815172922201,
+    "longitude": -38.66246000150304
+  }
+};
+---
+
+<html lang="pt">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/png" href="https://cdn.justpcs.com.br/wp-content/uploads/2024/03/justpcs-icon-blog-de-tecnologia.png" />
+    <link rel="apple-touch-icon" href="https://cdn.justpcs.com.br/wp-content/uploads/2024/03/justpcs-icon-blog-de-tecnologia.png">
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{pageTitle}</title>
+		<meta name="description" content={pageDescription}>
+    <link rel="canonical" href={pageUrl} /> {/* Adicionado: Canonical URL */}
+
+    <!-- Google Search Console verification -->
+    <meta name="google-site-verification" content="ztlLuqFN1zO_ltXyfYk_VPNC5Fs9I_0G9B1J8fbANF8" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:image" content={new URL(ogImage, Astro.site).href} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={pageUrl} />
+    <meta property="twitter:title" content={pageTitle} />
+    <meta property="twitter:description" content={pageDescription} />
+    <meta property="twitter:image" content={new URL(ogImage, Astro.site).href} />
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify(siteSchema)}></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+	</head>
+	<body>
+		<div class="site-wrapper">
+			<SiteNav menu={primaryMenu} generalSettings={generalSettings}></SiteNav>
+      {showHero && <Hero />} {/* Render Hero conditionally */}
+			<main class="container">
+				<slot></slot>
+			</main>
+			<SiteFooter menu={primaryMenu} generalSettings={generalSettings} categories={categoriesData}></SiteFooter>
+		</div>
+	</body>
+</html>
+
+<style is:global>
+	body {
+		font-family: var(--font-family-base);
+		font-size: var(--font-size-base);
+		color: var(--color-text-dark);
+		background-color: var(--color-background);
+	}
+	.site-wrapper {
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+	}
+	main.container {
+		flex-grow: 1;
+		padding-top: var(--spacing-lg);
+		padding-bottom: var(--spacing-lg);
+	}
+</style>

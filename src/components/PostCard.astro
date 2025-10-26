@@ -1,0 +1,169 @@
+---
+const { post, simplified = false } = Astro.props;
+---
+
+<article class="post-card">
+    <a class='post-link' href={post.uri} aria-label={post.title}>
+        {post?.featuredImage?.node?.mediaItemUrl || post?.featuredImage?.node?.sourceUrl ? (
+            <div class="post-image-wrapper">
+                <img
+                    src={post.featuredImage.node.mediaItemUrl || post.featuredImage.node.sourceUrl}
+                    alt={post.featuredImage.node.altText || `Imagem destacada para ${post.title}`}
+                    srcset={post.featuredImage.node.srcSet}
+                    loading='lazy'
+                    width={post.featuredImage.node.mediaDetails?.width || 600}
+                    height={post.featuredImage.node.mediaDetails?.height || 400}
+                >
+            </div>
+        ) : (
+            <div class="post-image-wrapper placeholder">
+                <img
+                    src="https://images.pexels.com/photos/1089440/pexels-photo-1089440.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                    alt={`Placeholder para ${post.title}`}
+                    loading='lazy'
+                    width={600}
+                    height={400}
+                />
+            </div>
+        )}
+        <div class="post-content">
+            <h3>{post.title}</h3>
+            {!simplified && (
+                <div class="categories">
+                    { post.categories.nodes.map(category => {
+                        return (<a class='term-link' href={category.uri}>{category.name}</a>)
+                    })}
+                </div>
+            )}
+            {!simplified && <p set:html={post.excerpt}></p>}
+            {!simplified && (
+                <div class="post-meta">
+                    <span class="post-date"><time datetime={post.date}>{new Date(post.date).toLocaleDateString('pt-BR', { year: 'numeric', month: 'long', day: 'numeric' })}</time></span>
+                </div>
+            )}
+        </div>
+    </a>
+</article>
+
+<style>
+    .post-card {
+        background-color: var(--color-text-light);
+        border-radius: var(--border-radius-lg);
+        box-shadow: var(--shadow-md);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .post-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .post-link {
+        text-decoration: none;
+        color: inherit;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .post-image-wrapper {
+        width: 100%;
+        height: 200px; /* Fixed height for images */
+        overflow: hidden;
+        border-top-left-radius: var(--border-radius-lg);
+        border-top-right-radius: var(--border-radius-lg);
+    }
+
+    .post-image-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Ensure image covers the area */
+        transition: transform 0.3s ease;
+    }
+
+    .post-card:hover .post-image-wrapper img {
+        transform: scale(1.05);
+    }
+
+    .post-content {
+        padding: var(--spacing-md);
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    h3 {
+        font-size: var(--font-size-lg);
+        font-family: var(--font-family-heading);
+        font-weight: 700;
+        margin-bottom: var(--spacing-xs);
+        color: var(--color-text-dark);
+    }
+
+    .post-content p {
+        font-size: var(--font-size-sm);
+        color: #666;
+        margin-bottom: var(--spacing-md);
+        flex-grow: 1;
+    }
+
+    .categories {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-xs);
+        margin-bottom: var(--spacing-sm); /* Espaçamento abaixo das categorias */
+    }
+
+    .term-link {
+        display: inline-block;
+        padding: 0.3rem 0.7rem;
+        background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+        color: var(--color-text-light);
+        border-radius: var(--border-radius-md);
+        font-weight: 600;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition: opacity 0.2s ease;
+    }
+
+    .term-link:hover {
+        opacity: 0.9;
+    }
+
+    .post-meta {
+        display: flex; /* Usando flex para alinhar a data */
+        justify-content: flex-end; /* Alinha a data à direita */
+        align-items: center;
+        margin-top: var(--spacing-sm);
+        padding-top: var(--spacing-sm);
+        border-top: 1px solid var(--color-border);
+    }
+
+    .post-date {
+        color: #999;
+        font-size: var(--font-size-sm);
+        font-weight: 400;
+    }
+
+    @media (max-width: 767px) {
+        .post-image-wrapper {
+            height: 180px;
+        }
+        .post-content {
+            padding: var(--spacing-sm);
+        }
+        h3 {
+            font-size: var(--font-size-base);
+        }
+        .post-content p {
+            font-size: 0.8rem;
+        }
+        .post-meta {
+            justify-content: flex-start; /* Alinha a data à esquerda em telas pequenas */
+        }
+    }
+</style>
